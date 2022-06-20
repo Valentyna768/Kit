@@ -5,8 +5,8 @@ describe('Crossdomain', () => {
        // browser.url('https://casino-kit-prod.site/');
         browser.setWindowSize(1440, 1079);
     });
-    //Test 0 Login to Admin//
-    describe('Login to Admin', () => {
+     //Test 0 Login to Admin//
+     describe('Login to Admin', () => {
         it('should login with valid credentials', async () => {
             browser.url('https://casino-kit-prod.site/sec-adm/');
             const login = await $('#user_login');
@@ -28,27 +28,34 @@ describe('Crossdomain', () => {
             await browser.pause(3000)
         });
     }); 
-        //Test 2 Updating crossdomain settings//
-    describe('Updating crossdomain settings', () => {
+      //Test 2 Updating crossdomain settings//
+      describe('Updating crossdomain settings', () => {
         it('Click on button and update crossdomain settings', async () => {
-            const btnStatus = $('#crossdomain_status');
-            expect(btnStatus).toHaveAttribute('value="true"');
-            const updateSaveBtn = $('#crossdomainAction');
-            updateSaveBtn.click()
-            await browser.pause(5000)
-            const CheckCount = $('#crossCheckCount')
-            expect(CheckCount).toHaveElementProperty('12')
-            const resultCount = $('#crossDomainResponse > span:nth-child(2)')
-            expect (resultCount).toHaveElementProperty('12') //тест проходить навіть якщо значення інше.Можливо .toHaveElementProperty не є вірним
+        const btnStatus = $('#crossdomain_status > option:nth-child(1)');
+        let btnStatusTitle = await btnStatus.getAttribute('value');
+        await assert.strictEqual(btnStatusTitle, 'true' );
+        const btnStatusFalce = $('#crossdomain_status > option:nth-child(2)');
+        let btnStatusFalceTitle = await btnStatusFalce.getAttribute('value');
+        await assert.strictEqual(btnStatusFalceTitle, 'false' );
+        const updateSaveBtn = $('#crossdomainAction');
+        updateSaveBtn.click()
+        await browser.pause(5000)
+        const CheckCount = $('#crossCheckCount')
+        await expect(CheckCount).toHaveText('12')
+        const resultCount = $('#crossDomainResponse > span:nth-child(2)')
+        await expect (resultCount).toHaveText('12') 
         });
     });
     //Test 3 Enable language switcher settings//
     describe('Enable language switcher settings', () => {
-        it('Click on button and update crossdomain settings', async () => {
+        it('Enable language switcher settings', async () => {
             const showLangCheck = await $('#show_select_languages_in_header_menu');
             await expect(showLangCheck).toBePresent();
             const menuView = $('#show_lang_menu_view > option:nth-child(2)');
-            expect(menuView).toHaveAttribute('value="image" selected');
+            let menuViewImg = await menuView.getAttribute('value');
+            await assert.strictEqual(menuViewImg, 'image' );
+            await expect (menuView).toHaveAttribute('selected')
+            //expect(menuView).toHaveAttribute('value="image" selected');
             const saveSettingsBtn =$('#wpbody-content > div:nth-child(7) > form > button');
             saveSettingsBtn.click();
             await browser.pause(3000)
@@ -58,7 +65,9 @@ describe('Crossdomain', () => {
     describe('Set environement', () => {
         it('Check prod environement and save settings', async () => {
             const envSelector =$('#crossdomain_env > option:nth-child(2)');
-            expect(envSelector).toHaveAttribute('value="prod" selected');
+            let envSelectorEnv = await envSelector.getAttribute('value');
+            await assert.strictEqual(envSelectorEnv, 'prod' );
+            await expect (envSelector).toHaveAttribute('selected')
             const setEnvBtn =$('#wpbody-content > div:nth-child(8) > form > button')
             setEnvBtn.click();
             await browser.pause(3000);
