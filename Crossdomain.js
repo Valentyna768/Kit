@@ -376,11 +376,64 @@ describe('Crossdomain', () => {
             it('Check img alt and title for page language switcher', async () => {
                 browser.url('https://casino-kit-prod.site/test-page-for-4-0-0/')
                 await browser.pause (3000);
-                const imgSwitchSoPage = await $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > header > div > nav.bfad2839.js-language-nav > ul > li > a > img');
-                let imgSwitchSoPageTitle = await imgSwitchSoPage.getAttribute('title');
-                await assert.strictEqual(imgSwitchSoPageTitle, 'flag_for_page' );
-                let imgSwitchSoPageAlt = await imgSwitchSoPage.getAttribute('alt');
-                await assert.strictEqual(imgSwitchSoPageAlt, 'alt_for_page' );
+                const imgSwitchPage = await $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > header > div > nav.bfad2839.js-language-nav > ul > li > a > img');
+                let imgSwitchPageTitle = await imgSwitchPage.getAttribute('title');
+                await assert.strictEqual(imgSwitchPageTitle, 'flag_for_page' );
+                let imgSwitchPageAlt = await imgSwitchPage.getAttribute('alt');
+                await assert.strictEqual(imgSwitchPageAlt, 'alt_for_page' );
+            });
+        });
+         //Test 37 Check href for category page//
+         describe('Check href for category page page', () => {
+            it('Check href for category page', async () => {
+                browser.url('https://casino-kit-prod.site/category/fix-version1/')
+                await browser.pause (3000);
+                const categoryHrefEn = $('head > link:nth-child(25)')
+                let categoryHrefEn1 = await categoryHrefEn.getAttribute('href'); //перевірити правильність конструкції і примінити до всіх href
+                await assert.strictEqual(categoryHrefEn1, 'https://casino-kit-prod.site/test-page-for-4-0-0/alternate/' );
+                const categoryHrefDe = $('head > link:nth-child(26)')
+                let categoryHrefDe1 = await categoryHrefDe.getAttribute('href');
+                await assert.strictEqual(categoryHrefDe1, 'https://casino-kit-prod.site/de/category/category-de/alternate/' );
+                const categoryHrefPa = $('head > link:nth-child(27)')
+                let categoryHrefPa1 = await categoryHrefPa.getAttribute('href');
+                await assert.strictEqual(categoryHrefPa1, 'https://casino-kit-prod.site/pa/category/category-pt/' );
+                const categoryHrefFr = $('head > link:nth-child(28)')
+                let categoryHrefFr1 = await categoryHrefFr.getAttribute('href');
+                await assert.strictEqual(categoryHrefFr1, 'https://casino-kit-prod.site/fr/category/category-fr/' );
+            });
+        });
+        //Test 38 Check canonical for category page//
+        describe('Check canonical for category page', () => {
+            it('Check canonical for category page', async () => {
+                browser.url('https://casino-kit-prod.site/category/fix-version1/')
+                await browser.pause (3000);
+                const categoryCanonical = $('head > link:nth-child(31)');//перевірити і примінити на всі перевірки каноніклів
+                let categoryCanonRel = await categoryCanonical.getAttribute('rel');
+                await assert.strictEqual(categoryCanonRel, 'canonical' );
+                let categoryCanonHref = await categoryCanonical.getAttribute('href');
+                await assert.strictEqual(categoryCanonHref, 'https://casino-kit-prod.site/test-page-for-4-0-0/canonical/' );
+            });
+        });
+        //Test 39 Check category page img url for language switcher //
+        describe('Check category page img url for language switcher', () => {
+            it('Check category page img url for language switcher', async () => {
+                browser.url('https://casino-kit-prod.site/category/fix-version1/')
+                await browser.pause (3000);
+                const imgSwitchCat = $('body > div > div.bfad087 > div > div.bfadb64 > header > div > nav.bfad2839.js-language-nav > ul > li > a > img'); //перевірити чи відпрацює і перенести на всі кейси з data-srcset 
+                let imgSwitchCat1 = await imgSwitchCat.getAttribute('data-srcset');
+                await assert.strictEqual(imgSwitchCat1, 'https://casino-kit-prod.site/wp-content/uploads/2021/12/Double-Joker-1_s.jpg 490w' );
+            });
+        });
+        //Test 40 Check img alt and title for category page language switcher //
+        describe('Check img alt and title for category page language switcher', () => {
+            it('Check img alt and title for category page language switcher', async () => {
+                browser.url('https://casino-kit-prod.site/category/fix-version1/')
+                await browser.pause (3000);
+                const imgSwitchCat = await $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > header > div > nav.bfad2839.js-language-nav > ul > li > a > img');
+                let imgSwitchCatTitle = await imgSwitchCat.getAttribute('title');
+                await assert.strictEqual(imgSwitchCatTitle, '' );//перевірити чи відпрацює з пустим значенням тайтлу
+                let imgSwitchCatAlt = await imgSwitchCat.getAttribute('alt');
+                await assert.strictEqual(imgSwitchCatAlt, 'Category casino-kit-prod.site' );
             });
         });
 });
