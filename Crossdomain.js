@@ -6,87 +6,92 @@ describe('Crossdomain', () => {
         browser.setWindowSize(1440, 1079);
     });
 
-    //  //Test 0 Login to Admin//
-    //  describe('Login to Admin', () => {
-    //     it('should login with valid credentials', async () => {
-    //         browser.url('https://qa.casino-kit-prod.site/sec-adm/');
-    //         const login = await $('#user_login');
-    //         await login.setValue('ncteDman');
-    //         console.log(await login.getValue());
-    //         const password = await $('#user_pass');
-    //         await password.setValue('XijohWiu7sheeR');
-    //         console.log(await password.getValue());
-    //         const submitBtn = $('#wp-submit');
-    //         submitBtn.click()
-    //         await browser.pause(5000)
-    //         await browser.url('https://qa.casino-kit-prod.site/wp-admin/')
-    //     });
-    // });
-    // //Test 1 Open admin crossdomain settings//
+     //Test 0 Login to Admin//
+     describe('Login to Admin', () => {
+        it('should login with valid credentials', async () => {
+            browser.url('https://qa.casino-kit-prod.site/sec-adm/');
+            const login = await $('#user_login');
+            await login.setValue('ncteDman');
+            console.log(await login.getValue());
+            const password = await $('#user_pass');
+            await password.setValue('XijohWiu7sheeR');
+            console.log(await password.getValue());
+            const submitBtn = $('#wp-submit');
+            submitBtn.click()
+            await browser.pause(5000)
+            await browser.url('https://qa.casino-kit-prod.site/wp-admin/')
+        });
+    });
+    //Test 1 Open admin crossdomain settings//
     // describe('Open admin crossdomain settings', () => {
     //     it('should open crossdomain setting page in admin', async () => {
     //         browser.url('https://qa.casino-kit-prod.site/wp-admin/options-general.php?page=sitemap-custom-polylang');
     //         await browser.pause(3000)
     //     });
     // }); 
-    //   //Test 2 Updating crossdomain settings//
-    //   describe('Updating crossdomain settings', () => {
-    //     it('Click on button and update crossdomain settings', async () => {
-    //     const btnStatus = $('#crossdomain_status > option:nth-child(1)');
-    //     let btnStatusTitle = await btnStatus.getAttribute('value');
-    //     await assert.strictEqual(btnStatusTitle, 'true' );
-    //     const btnStatusFalce = $('#crossdomain_status > option:nth-child(2)');
-    //     let btnStatusFalceTitle = await btnStatusFalce.getAttribute('value');
-    //     await assert.strictEqual(btnStatusFalceTitle, 'false' );
-    //     const updateSaveBtn = $('#crossdomainAction');
-    //     updateSaveBtn.click()
-    //     const CheckCount = $('#crossCheckCount')
-    //     await expect(CheckCount).toHaveText('9')
-    //     const resultCount = $('#crossDomainResponse > span:nth-child(2)')
-    //     await expect (resultCount).toHaveText('9') 
-    //     });
-    // });
-    // //Test 3 Enable language switcher settings//
-    // describe('Enable language switcher settings', () => {
-    //     it('Enable language switcher settings', async () => {
-    //         const showLangCheck = await $('#show_select_languages_in_header_menu');
-    //         await expect(showLangCheck).toBePresent();
-    //         const menuView = $('#show_lang_menu_view > option:nth-child(2)');
-    //         let menuViewImg = await menuView.getAttribute('value');
-    //         await assert.strictEqual(menuViewImg, 'image' );
-    //         await expect (menuView).toHaveAttribute('selected')
-    //         //expect(menuView).toHaveAttribute('value="image" selected');
-    //         const saveSettingsBtn =$('#wpbody-content > div:nth-child(7) > form > button');
-    //         saveSettingsBtn.click();
-    //         await browser.pause(3000)
-    //     });
-    // });
-    // //Test 4 Set environement//
-    // describe('Set environement', () => {
-    //     it('Check prod environement and save settings', async () => {
-    //         const envSelector =$('#crossdomain_env > option:nth-child(2)');
-    //         let envSelectorEnv = await envSelector.getAttribute('value');
-    //         await assert.strictEqual(envSelectorEnv, 'prod' );
-    //         await expect (envSelector).toHaveAttribute('selected')
-    //         const setEnvBtn =$('#wpbody-content > div:nth-child(8) > form > button')
-    //         setEnvBtn.click();
-    //         await browser.pause(3000);
-    //     });
-    // });
+      //Test 2 Updating crossdomain settings//
+      describe('Updating crossdomain settings', () => {
+        it('Click on button and update crossdomain settings', async () => {
+          browser.url('https://qa.casino-kit-prod.site/wp-admin/options-general.php?page=sitemap-custom-polylang');
+          await browser.pause(4000)
+        //const btnStatus = $('#crossdomain_status > option:nth-child(1)');
+        // let btnStatusTitle = await btnStatus.getAttribute('value');
+        // await assert.strictEqual(btnStatusTitle, 'true' );
+        // const btnStatusFalce = $('#crossdomain_status > option:nth-child(2)');
+        // let btnStatusFalceTitle = await btnStatusFalce.getAttribute('value');
+        // await assert.strictEqual(btnStatusFalceTitle, 'false' );
+        const updateSaveBtn = $('#crossdomainAction');
+        updateSaveBtn.click()
+        await browser.pause(2000)
+        const CheckCount = $('#crossCheckCount')
+        await expect(CheckCount).toHaveText('9')
+        const resultCount = $('#crossDomainResponse > span:nth-child(2)')
+        await expect (resultCount).toHaveText('9') 
+        });
+    });
+    //Test 3 Enable language switcher settings//
+    describe('Enable language switcher settings', () => {
+        it('Enable language switcher settings', async () => {
+            const showLangCheck = await $('#wpbody-content > div:nth-child(7) > form > div:nth-child(1) > label');
+            await expect(showLangCheck).toBePresent();
+            const menuView = $('#show_lang_menu_view > option:nth-child(2)');
+            let menuViewEn = await menuView.getAttribute('value');
+            await assert.strictEqual(menuViewEn, 'image' );
+            //let menuViewImg = await menuView.getAttribute('value');
+            //await assert.strictEqual(menuViewImg, 'image' );
+            await expect (menuView).toHaveAttribute('selected')
+            //expect(menuView).toHaveAttribute('value="image" selected');
+            const saveSettingsBtn =$('#wpbody-content > div:nth-child(7) > form > button');
+            saveSettingsBtn.click();
+            await browser.pause(3000)
+        });
+    });
+    //Test 4 Set environement//
+    describe('Set environement', () => {
+        it('Check prod environement and save settings', async () => {
+            const envSelector =$('#crossdomain_env > option:nth-child(2)');
+            let envSelectorEnv = await envSelector.getAttribute('value');
+            await assert.strictEqual(envSelectorEnv, 'prod' );
+            await expect (envSelector).toHaveAttribute('selected')
+            // const setEnvBtn =$('#wpbody-content > div:nth-child(8) > form > button')
+            // setEnvBtn.click();
+            // await browser.pause(3000);
+        });
+    });
  //Test 5 Check all href for homepage//
  describe('Check all href for homepage', () => {
     it('Check all href for homepage', async () => {
         browser.url('https://qa.casino-kit-prod.site/')
-        const hrefEn = $('head > link:nth-child(43)');
+        const hrefEn = $('head > link:nth-child(49)');
         let hrefEnEn = await hrefEn.getAttribute('href');
         await assert.strictEqual(hrefEnEn, 'https://qa.casino-kit-prod.site/alternate/' );
-        const hrefDe = $('head > link:nth-child(45)');
+        const hrefDe = $('head > link:nth-child(51)');
         let hrefDeDe = await hrefDe.getAttribute('href');
         await assert.strictEqual(hrefDeDe, 'https://casino-kit-prod.site/de/alternate/' );
-        const hrefUa = $('head > link:nth-child(46)');
+        const hrefUa = $('head > link:nth-child(52)');
         let hrefUaUa = await hrefUa.getAttribute('href');
         await assert.strictEqual(hrefUaUa, 'https://aussielowdepositcasino-com.prokit.me/alternate/' );
-        const hrefFl = $('head > link:nth-child(44)');
+        const hrefFl = $('head > link:nth-child(50)');
         let hrefFlFl = await hrefFl.getAttribute('href');
         await assert.strictEqual(hrefFlFl, 'https://casinosfellow-com.prokit.me/alternate/' );
         });
@@ -125,7 +130,7 @@ describe('Crossdomain', () => {
         it('Check href for casino page', async () => {
             browser.url('https://qa.casino-kit-prod.site/wir-wetten-casino/')
             await browser.pause(3000)
-            const casinoHref = $('head > link:nth-child(40)')
+            const casinoHref = $('/html/head/link[20]')
             let casinoHrefEn = await casinoHref.getAttribute('href');
             await assert.strictEqual(casinoHrefEn, 'https://casino-kit-prod.site/wir-wetten-casino/alternate/' );
         });
