@@ -1,5 +1,7 @@
 const assert = require('assert');
-//const mock = browser.mock('**sitemap_main.xml*', { method: 'POST' }) //перевірити у тесті статус коду Test3
+const https = require("https");
+//const fetch = require("node-fetch"); -не проходить, потрібно більше поковиряти
+
 
 describe('Crossdomain', () => {
     beforeEach(async function () {
@@ -69,12 +71,16 @@ describe('Crossdomain', () => {
         });
         //  //Test 4 Sitemap status code 200// - не розумію як встановити/зробити щоб запит проходив
         //  describe('Sitemap status code 200', () => {
-        //     it('Sitemap status code 200', async () => {    
-        //         await expect(mock).toBeRequestedWith({
-        //         url: 'https://casino-kit-prod.site/sitemap_main.xml',                                 
-        //         statusCode: 200,              //чи пройде?
+        //     it('Test 1: Status of https://qa.casino-kit-prod.site/sitemap_main.xml', async function () {
+        //         let siteUrl = 'https://qa.casino-kit-prod.site/sitemap_main.xml';
+        //         await browser.url(siteUrl);
+        //         let siteLink = await fetch(siteUrl);
+        //         console.log(siteLink.status);
+        //         let getStatus = siteLink.status;
+        //         await assert(getStatus === 200);
         //     });
         // });
+
         //Test 5 Links are present in Sitemap//
     describe('Links are present in Sitemap', () => {
         it('check if post, page, casino, slot links are present', async () => {
@@ -152,7 +158,7 @@ describe('Open sowtware page in admin', () => {
         browser.url('https://qa.casino-kit-prod.site/wp-admin/term.php?taxonomy=software&tag_ID=1863&post_type=casino&wp_http_referer=%2Fwp-admin%2Fedit-tags.php%3Ftaxonomy%3Dsoftware%26post_type%3Dcasino');
     });
 });
- //Test 12 Check selected checkbox and update software page//
+ //Test 13 Check selected checkbox and update software page//
  describe('Check selected checkbox and update software page', () => {
     it('Check selected checkbox and update software page', async () => {
         browser.url('https://qa.casino-kit-prod.site/wp-admin/term.php?taxonomy=software&tag_ID=1863&post_type=casino&wp_http_referer=%2Fwp-admin%2Fedit-tags.php%3Ftaxonomy%3Dsoftware%26post_type%3Dcasino');
@@ -163,14 +169,48 @@ describe('Open sowtware page in admin', () => {
         await browser.pause(3000);
     });
 });
-//Test 13 Open settings page in admin//
+//Test 14 Open settings page in admin//
 describe('Open settings page in admin', () => {
     it('should Open settings page in admin', async () => {
         browser.url('https://qa.casino-kit-prod.site/wp-admin/options-general.php?page=sitemap-custom-polylang');
     });
 });
- 
-
-
-    
+ //Test 15 Sitemap generating with taxonomies
+ describe('Generate new sitemap', () => {
+    it('Generate new sitemap', async () => {
+        browser.url('https://qa.casino-kit-prod.site/wp-admin/options-general.php?page=sitemap-custom-polylang');
+        const saveSitemapBtn =$('#wpbody-content > div:nth-child(6) > div:nth-child(1) > form > button')
+        saveSitemapBtn.click();
+        await browser.pause(3000);
+        const genBtn = $('#generateSitemapAction')
+        genBtn.click()
+        await browser.pause(5000)
+    });
+});
+//  //Test 16 Sitemap status 200 - поки не відпрацьовуе, на початку документу не проходить fetch
+//  describe('Sitemap status code 200', () => {
+//     it('Test 1: Status of https://qa.casino-kit-prod.site/sitemap_main.xml', async function () {
+//         let siteUrl = 'https://qa.casino-kit-prod.site/sitemap_main.xml';
+//         await browser.url(siteUrl);
+//         let siteLink = await fetch(siteUrl);
+//         console.log(siteLink.status);
+//         let getStatus = siteLink.status;
+//         await assert(getStatus === 200);
+//     });
+// });
+   //Test 5 Taxonomies Links are present in Sitemap//
+   describe('Taxonomies Links are present in Sitemap', () => {
+    it('check if category,payment and software links are present', async () => {
+    browser.url('https://qa.casino-kit-prod.site/sitemap_main.xml');
+    const categoryUrl =$('body > urlset > url:nth-child(138) > loc');
+    await expect(categoryUrl).toBePresent(); 
+    await expect(categoryUrl).toHaveTextContaining('https://qa.casino-kit-prod.site/category/test-category-for-4-0-0-da-year/')
+    const paymentUrl =$('body > urlset > url:nth-child(140) > loc');
+    await expect(paymentUrl).toBePresent(); 
+    await expect(paymentUrl).toHaveTextContaining('https://qa.casino-kit-prod.site/payment-for-test/')
+    const softwareUrl =$('body > urlset > url:nth-child(137) > loc');
+    await expect(softwareUrl).toBePresent(); 
+    await expect(softwareUrl).toHaveTextContaining('https://qa.casino-kit-prod.site/soft5/test-software-for-4-0-0/')
+    });
+});
     
