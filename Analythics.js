@@ -69,14 +69,97 @@ describe('Crossdomain', () => {
             await expect(headGtm).toBePresent();
         });
     }); 
-     //Test 2 Check redirect from table logo//
-     describe('Check GTM body code on Homepage', () => {
-        it('Check GTM body code on Homepage', async () => {
-            browser.url('https://qa.casino-kit-prod.site');
-            await browser.pause(2000)
-            const logoRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-fragment-table-body.bfad91c.bfad7bc > div:nth-child(1) > div > div.bfad713.bfaddf4')
-            await expect(logoRedirect).click
-            await browser.newWindow ('https://biitly.info/7nvXrK?id_casino=27774&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=cl1&cid=368111694.1658728743&position=1&geo=not-geolocation&casino_name=nitrocasino')
-            await browser.pause(3000)
-        });
-    }); 
+     //Test 3 and 4 Check redirect from cart logo 1 and dataLayer events//
+describe('Check redirect from cart logo 1 and dataLayer events', () => {
+    it('Check redirect from cart logo 1 and dataLayer events', async () => {
+        browser.url('https://qa.casino-kit-prod.site/');
+        await browser.pause(2000)
+        const logoRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-fragment-table-body.bfad91c.bfad7bc > div:nth-child(1) > div > div.bfad713.bfaddf4')
+        await expect(logoRedirect).click
+        await browser.newWindow ('https://qa.casino-kit-prod.site/to-casino/?id=27774&location=https://qa.casino-kit-prod.site/&cid=1943612551.1655798843&element=cl1&casino_name=nitrocasino&position=1&geo=')
+        await expect(browser).toHaveUrlContaining('https://biitly.info/7nvXrK?id_casino=27774&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=cl1&cid=368111694.1658728743&position=1&geo=not-geolocation&casino_name=nitrocasino')
+        await browser.pause(3000)
+        await browser.switchWindow('https://qa.casino-kit-prod.site/')
+        await browser.pause(3000)
+        //console.log({event: 'GAevent', eventCategory: 'toCasino', eventAction: 'cl1', eventLabel: 'NітrоСąsіnо', position: 1,})
+    });
+})
+//Test 5 and 6 Check redirect from table overlay 2 and dataLayer events//
+describe('Check redirect from cart overlay 2 and dataLayer events', () => {
+    it('Check redirect from cart overlay 2 and dataLayer events', async () => {
+        browser.url('https://qa.casino-kit-prod.site/');
+        await browser.pause(2000)
+        const overlayRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-fragment-table-body.bfad91c.bfad7bc > div:nth-child(2) > div')
+        await expect(overlayRedirect).click
+        await browser.newWindow('https://qa.casino-kit-prod.site/to-casino/?id=27151&location=https://qa.casino-kit-prod.site/&cid=1943612551.1655798843&element=cb1&casino_name=african%20grand%20casino&position=2&geo=') 
+        await expect(browser).toHaveUrlContaining('https://biitly.info/7nvXrK?id_casino=27151&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=cb1&cid=1943612551.1655798843&position=2&geo=not-geolocation&casino_name=african+grand+casino')
+        await browser.pause(3000)
+        await browser.switchWindow('https://qa.casino-kit-prod.site/')
+        await browser.pause(3000)
+        //console.log({event: 'GAevent', eventCategory: 'toCasino', eventAction: 'cl1', eventLabel: 'NітrоСąsіnо', position: 1,})
+    });
+})
+//Test 7 and 8 Check redirect from cart 3 cta and dataLayer events//
+describe('Check redirect from cart 3 cta and dataLayer events', () => {
+    it('Check redirect from cart 3 cta and dataLayer events', async () => {
+        browser.url('https://qa.casino-kit-prod.site/');
+        await browser.pause(2000)
+        const overlayRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-fragment-table-body.bfad91c.bfad7bc > div:nth-child(3) > div > div.bfadfa99.bfadcef5.bfaddf4 > button')
+        await expect(overlayRedirect).click
+        await browser.newWindow('https://qa.casino-kit-prod.site/to-casino/?id=26934&location=https://qa.casino-kit-prod.site/&cid=1943612551.1655798843&element=btn1&casino_name=brazino777%20casino&position=3&geo=') 
+        await browser.pause(2000)
+        await expect(browser).toHaveUrlContaining('https://biitly.info/7nvXrK?id_casino=26934&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=btn1&cid=1943612551.1655798843&position=3&geo=not-geolocation&casino_name=brazino777+casino')
+        await browser.pause(2000)
+        await browser.switchWindow('https://qa.casino-kit-prod.site/')
+        await browser.pause(3000)
+        //console.log({event: 'GAevent', eventCategory: 'toCasino', eventAction: 'cl1', eventLabel: 'NітrоСąsіnо', position: 1,})
+    });
+})
+//Test 9 and 10 Check redirect from table logo 4 and dataLayer events//
+describe('Check redirect from table logo 4 and dataLayer events', () => {
+    it('Check redirect from table logo 4 and dataLayer events', async () => {
+        browser.url('https://qa.casino-kit-prod.site/');
+        await browser.pause(2000)
+        const overlayRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-ajax-casino-table > div.bfadbb4.bfad537 > div > div.js-fragment-table-body.bfad510d > div:nth-child(1) > div.bfad3a2.bfadc0fa > div > img')
+        await expect(overlayRedirect).click
+        await browser.newWindow('https://qa.casino-kit-prod.site/to-casino/?id=27129&location=https://qa.casino-kit-prod.site/&cid=1943612551.1655798843&element=l1&casino_name=butlers%20bingo&position=4&geo=') 
+        await browser.pause(2000)
+        await expect(browser).toHaveUrlContaining('https://biitly.info/7nvXrK?id_casino=27129&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=l1&cid=1943612551.1655798843&position=4&geo=not-geolocation&casino_name=butlers+bingo')
+        await browser.pause(2000)
+        await browser.switchWindow('https://qa.casino-kit-prod.site/')
+        await browser.pause(3000)
+        //console.log({event: 'GAevent', eventCategory: 'toCasino', eventAction: 'cl1', eventLabel: 'NітrоСąsіnо', position: 1,})
+    });
+})
+//Test 11 and 12 Check redirect from table overlay 5 and dataLayer events//
+describe('Check redirect from table overlay 5 and dataLayer events', () => {
+    it('Check redirect from table overlay 5 and dataLayer events', async () => {
+        browser.url('https://qa.casino-kit-prod.site/');
+        await browser.pause(2000)
+        const overlayRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-ajax-casino-table > div.bfadbb4.bfad537 > div > div.js-fragment-table-body.bfad510d > div:nth-child(2)')
+        await expect(overlayRedirect).click
+        await browser.newWindow('https://qa.casino-kit-prod.site/to-casino/?id=26936&location=https://qa.casino-kit-prod.site/&cid=1943612551.1655798843&element=t1&casino_name=casino%20empire777&position=5&geo=') 
+        await browser.pause(2000)
+        await expect(browser).toHaveUrlContaining('https://biitly.info/7nvXrK?id_casino=26936&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=t1&cid=1943612551.1655798843&position=5&geo=not-geolocation&casino_name=casino+empire777')
+        await browser.pause(2000)
+        await browser.switchWindow('https://qa.casino-kit-prod.site/')
+        await browser.pause(3000)
+        //console.log({event: 'GAevent', eventCategory: 'toCasino', eventAction: 'cl1', eventLabel: 'NітrоСąsіnо', position: 1,})
+    });
+})
+//Test 13 and 14 Check redirect from table cta 6 and dataLayer events//
+describe('Check redirect from table cta 6 and dataLayer events', () => {
+    it('Check redirect from table cta 6 and dataLayer events', async () => {
+        browser.url('https://qa.casino-kit-prod.site/');
+        await browser.pause(2000)
+        const overlayRedirect = $('body > div.bfad349.lzimg > div.bfad087 > div > div.bfadb64 > main > section:nth-child(2) > div.js-ajax-casino-table > div.bfadbb4.bfad537 > div > div.js-fragment-table-body.bfad510d > div:nth-child(3) > div.bfad3a2.bfadce3.bfadd93 > button')
+        await expect(overlayRedirect).click
+        await browser.newWindow('https://qa.casino-kit-prod.site/to-casino/?id=26930&location=https://qa.casino-kit-prod.site/&cid=1943612551.1655798843&element=b1&casino_name=casino%20777&position=6&geo=') 
+        await browser.pause(2000)
+        await expect(browser).toHaveUrlContaining('https://biitly.info/7nvXrK?id_casino=26930&location=https%3A%2F%2Fqa.casino-kit-prod.site%2F&element=b1&cid=1943612551.1655798843&position=6&geo=not-geolocation&casino_name=casino+777')
+        await browser.pause(2000)
+        await browser.switchWindow('https://qa.casino-kit-prod.site/')
+        await browser.pause(3000)
+        //console.log({event: 'GAevent', eventCategory: 'toCasino', eventAction: 'cl1', eventLabel: 'NітrоСąsіnо', position: 1,})
+    });
+})
